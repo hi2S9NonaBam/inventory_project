@@ -55,6 +55,7 @@ CREATE TABLE Parameters
     Value_clob CLOB ,
     List_id INTEGER
   ) ;
+ALTER TABLE Parameters ADD CONSTRAINT Parameters_PK PRIMARY KEY ( Entity_id, ParametersTypes_id ) ;
 
 
 CREATE TABLE ParametersTypes
