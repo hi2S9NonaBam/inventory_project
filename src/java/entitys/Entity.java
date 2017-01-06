@@ -1,17 +1,19 @@
 package entitys;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,12 +28,14 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Entity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ENTITY_ID")
-    private BigDecimal entityId;
+    @GeneratedValue(generator = "entitySeq")
+    @SequenceGenerator(name="entitySeq",sequenceName="ENTITY_SEQ", allocationSize=1)
+    private long entityId;
     
     @Size(max = 20)
     @Column(name = "NAME")
@@ -54,15 +58,18 @@ public class Entity implements Serializable {
     public Entity() {
     }
 
-    public Entity(BigDecimal entityId) {
-        this.entityId = entityId;
+    public Entity(String entityName, Entity parent, Entitytype entityType, List<Parameters> parameters) {
+        this.entitytypeId = entityType;
+        this.name = entityName;
+        this.parentId = parent;
+        this.parametersList = parameters;
     }
 
-    public BigDecimal getEntityId() {
+    public long getEntityId() {
         return entityId;
     }
 
-    public void setEntityId(BigDecimal entityId) {
+    public void setEntityId(long entityId) {
         this.entityId = entityId;
     }
 
@@ -106,26 +113,6 @@ public class Entity implements Serializable {
 
     public void setParametersList(List<Parameters> parametersList) {
         this.parametersList = parametersList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (entityId != null ? entityId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Entity)) {
-            return false;
-        }
-        Entity other = (Entity) object;
-        if ((this.entityId == null && other.entityId != null) || (this.entityId != null && !this.entityId.equals(other.entityId))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

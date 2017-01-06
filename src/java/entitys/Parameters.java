@@ -59,7 +59,7 @@ public class Parameters implements Serializable {
         this.parametersPK = parametersPK;
     }
 
-    public Parameters(BigInteger entityId, BigInteger parameterstypesId) {
+    public Parameters(long entityId, long parameterstypesId) {
         this.parametersPK = new ParametersPK(entityId, parameterstypesId);
     }
 

@@ -13,59 +13,35 @@ public class ParametersPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ENTITY_ID")
-    private BigInteger entityId;
+    private long entityId;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "PARAMETERSTYPES_ID")
-    private BigInteger parameterstypesId;
+    private long parameterstypesId;
 
     public ParametersPK() {
     }
 
-    public ParametersPK(BigInteger entityId, BigInteger parameterstypesId) {
+    public ParametersPK(long entityId, long parameterstypesId) {
         this.entityId = entityId;
         this.parameterstypesId = parameterstypesId;
     }
 
-    public BigInteger getEntityId() {
+    public long getEntityId() {
         return entityId;
     }
 
-    public void setEntityId(BigInteger entityId) {
+    public void setEntityId(long entityId) {
         this.entityId = entityId;
     }
 
-    public BigInteger getParameterstypesId() {
+    public long getParameterstypesId() {
         return parameterstypesId;
     }
 
-    public void setParameterstypesId(BigInteger parameterstypesId) {
+    public void setParameterstypesId(long parameterstypesId) {
         this.parameterstypesId = parameterstypesId;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (entityId != null ? entityId.hashCode() : 0);
-        hash += (parameterstypesId != null ? parameterstypesId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ParametersPK)) {
-            return false;
-        }
-        ParametersPK other = (ParametersPK) object;
-        if ((this.entityId == null && other.entityId != null) || (this.entityId != null && !this.entityId.equals(other.entityId))) {
-            return false;
-        }
-        if ((this.parameterstypesId == null && other.parameterstypesId != null) || (this.parameterstypesId != null && !this.parameterstypesId.equals(other.parameterstypesId))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

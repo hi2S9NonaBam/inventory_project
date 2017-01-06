@@ -36,7 +36,7 @@ public class Entitytype implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ENTITYTYPE_ID")
-    private BigDecimal entitytypeId;
+    private long entitytypeId;
     
     @Size(max = 20)
     @Column(name = "NAME")
@@ -55,15 +55,15 @@ public class Entitytype implements Serializable {
     public Entitytype() {
     }
 
-    public Entitytype(BigDecimal entitytypeId) {
+    public Entitytype(long entitytypeId) {
         this.entitytypeId = entitytypeId;
     }
 
-    public BigDecimal getEntitytypeId() {
+    public long getEntitytypeId() {
         return entitytypeId;
     }
 
-    public void setEntitytypeId(BigDecimal entitytypeId) {
+    public void setEntitytypeId(long entitytypeId) {
         this.entitytypeId = entitytypeId;
     }
 
@@ -99,26 +99,6 @@ public class Entitytype implements Serializable {
 
     public void setParentId(Entitytype parentId) {
         this.parentId = parentId;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (entitytypeId != null ? entitytypeId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Entitytype)) {
-            return false;
-        }
-        Entitytype other = (Entitytype) object;
-        if ((this.entitytypeId == null && other.entitytypeId != null) || (this.entitytypeId != null && !this.entitytypeId.equals(other.entitytypeId))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

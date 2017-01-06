@@ -30,7 +30,7 @@ public class Parameterstypes implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PARAMETERSTYPES_ID")
-    private BigDecimal parameterstypesId;
+    private long parameterstypesId;
     
     @Size(max = 20)
     @Column(name = "NAME")
@@ -49,15 +49,15 @@ public class Parameterstypes implements Serializable {
     public Parameterstypes() {
     }
 
-    public Parameterstypes(BigDecimal parameterstypesId) {
+    public Parameterstypes(long parameterstypesId) {
         this.parameterstypesId = parameterstypesId;
     }
 
-    public BigDecimal getParameterstypesId() {
+    public long getParameterstypesId() {
         return parameterstypesId;
     }
 
-    public void setParameterstypesId(BigDecimal parameterstypesId) {
+    public void setParameterstypesId(long parameterstypesId) {
         this.parameterstypesId = parameterstypesId;
     }
 
@@ -93,26 +93,6 @@ public class Parameterstypes implements Serializable {
 
     public void setListList(List<entitys.List> listList) {
         this.listList = listList;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (parameterstypesId != null ? parameterstypesId.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Parameterstypes)) {
-            return false;
-        }
-        Parameterstypes other = (Parameterstypes) object;
-        if ((this.parameterstypesId == null && other.parameterstypesId != null) || (this.parameterstypesId != null && !this.parameterstypesId.equals(other.parameterstypesId))) {
-            return false;
-        }
-        return true;
     }
 
     @Override
