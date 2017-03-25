@@ -2,8 +2,8 @@ package ejb;
 
 import entitys.Entity;
 import entitys.EntityType;
-import entitys.Parameters;
-import entitys.ParametersTypes;
+import entitys.Parameter;
+import entitys.ParametersType;
 import java.util.List;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
@@ -13,10 +13,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless
-@ManagedBean(name = "entityService")
 public class CRUDBean implements CRUDBeanLocal {
 
-    @PersistenceContext(unitName = "Inventory_NetCrackerPU")
+    @PersistenceContext(unitName = "ru.netcracker_Inventorka")
     private EntityManager entityManager;
     
     
@@ -32,7 +31,7 @@ public class CRUDBean implements CRUDBeanLocal {
     }
 
     @Override
-    public List<ParametersTypes> getParametrsTypes() {
+    public List<ParametersType> getParametrsTypes() {
         return entityManager.createQuery("SELECT p FROM ParametersTypes p").getResultList();
     }
 
@@ -48,7 +47,7 @@ public class CRUDBean implements CRUDBeanLocal {
     }
 
     @Override
-    public void addEntity(String _entityType, String entityName, List<Parameters> parametrs) {
+    public void addEntity(String _entityType, String entityName, List<Parameter> parametrs) {
         if(entityName == null || _entityType == null)
             return;
         //EntityType в сервлете (заменить)
@@ -62,7 +61,7 @@ public class CRUDBean implements CRUDBeanLocal {
         *   Что-бы заперсистить параметры, сущность должна получить ключ.
         *   Может есть способ лучше?
         */
-        for(Parameters tmp : parametrs)
+        for(Parameter tmp : parametrs)
         {
             tmp.getParametersPK().setEntityId(entity.getEntityId()+1);
         }

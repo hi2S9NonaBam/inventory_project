@@ -3,9 +3,9 @@ package testserv;
 import ejb.CRUDBeanLocal;
 import entitys.Entity;
 import entitys.EntityType;
-import entitys.Parameters;
-import entitys.ParametersPK;
-import entitys.ParametersTypes;
+import entitys.Parameter;
+import entitys.ParameterPK;
+import entitys.ParametersType;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
@@ -81,7 +81,7 @@ public class TestServlet extends HttpServlet {
             
             out.println("<br><label>Параметр  </label>"
                         + "<select name=\"parametrType\">");
-            for(ParametersTypes tmp : crud.getParametrsTypes())
+            for(ParametersType tmp : crud.getParametrsTypes())
                 out.println("<option>"+ tmp.getName() +"</option>\n");
             out.println("</select><input type=\"text\" name=\"parametr\" value=\"\" />");
             
@@ -106,7 +106,7 @@ public class TestServlet extends HttpServlet {
                 out.println("<tr>");
                 out.println("<td>" + tmp.getName() + "</td>");
                 out.println("<td>" + tmp.getEntitytypeId().getName() + "</td>");
-                for(Parameters param : tmp.getParametersList())
+                for(Parameter param : tmp.getParametersList())
                 {
                     out.println("<td>" + param.getParameterstypes().getName()+ "</td>");
                     out.println("<td>" + param.getValueDate()+ "</td>");

@@ -22,11 +22,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Parameters.findAll", query = "SELECT p FROM Parameters p")})
-public class Parameters implements Serializable {
+public class Parameter implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected ParametersPK parametersPK;
+    protected ParameterPK parametersPK;
     
     @Column(name = "VALUE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -50,24 +50,24 @@ public class Parameters implements Serializable {
     
     @JoinColumn(name = "PARAMETERSTYPES_ID", referencedColumnName = "PARAMETERSTYPES_ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private ParametersTypes parameterstypes;
+    private ParametersType parameterstypes;
 
-    public Parameters() {
+    public Parameter() {
     }
 
-    public Parameters(ParametersPK parametersPK) {
+    public Parameter(ParameterPK parametersPK) {
         this.parametersPK = parametersPK;
     }
 
-    public Parameters(long entityId, long parameterstypesId) {
-        this.parametersPK = new ParametersPK(entityId, parameterstypesId);
+    public Parameter(long entityId, long parameterstypesId) {
+        this.parametersPK = new ParameterPK(entityId, parameterstypesId);
     }
 
-    public ParametersPK getParametersPK() {
+    public ParameterPK getParametersPK() {
         return parametersPK;
     }
 
-    public void setParametersPK(ParametersPK parametersPK) {
+    public void setParametersPK(ParameterPK parametersPK) {
         this.parametersPK = parametersPK;
     }
 
@@ -111,11 +111,11 @@ public class Parameters implements Serializable {
         this.listId = listId;
     }
 
-    public ParametersTypes getParameterstypes() {
+    public ParametersType getParameterstypes() {
         return parameterstypes;
     }
 
-    public void setParameterstypes(ParametersTypes parameterstypes) {
+    public void setParameterstypes(ParametersType parameterstypes) {
         this.parameterstypes = parameterstypes;
     }
 
@@ -129,10 +129,10 @@ public class Parameters implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Parameters)) {
+        if (!(object instanceof Parameter)) {
             return false;
         }
-        Parameters other = (Parameters) object;
+        Parameter other = (Parameter) object;
         if ((this.parametersPK == null && other.parametersPK != null) || (this.parametersPK != null && !this.parametersPK.equals(other.parametersPK))) {
             return false;
         }

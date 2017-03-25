@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ParametersTypes.findAll", query = "SELECT p FROM ParametersTypes p")})
-public class ParametersTypes implements Serializable {
+public class ParametersType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -41,15 +41,15 @@ public class ParametersTypes implements Serializable {
     private String type;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameterstypes")
-    private List<Parameters> parametersList;
+    private List<Parameter> parametersList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameterstypesId")
     private List<entitys.List> listList;
 
-    public ParametersTypes() {
+    public ParametersType() {
     }
 
-    public ParametersTypes(long parameterstypesId) {
+    public ParametersType(long parameterstypesId) {
         this.parameterstypesId = parameterstypesId;
     }
 
@@ -78,11 +78,11 @@ public class ParametersTypes implements Serializable {
     }
 
     @XmlTransient
-    public List<Parameters> getParametersList() {
+    public List<Parameter> getParametersList() {
         return parametersList;
     }
 
-    public void setParametersList(List<Parameters> parametersList) {
+    public void setParametersList(List<Parameter> parametersList) {
         this.parametersList = parametersList;
     }
 

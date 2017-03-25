@@ -9,13 +9,13 @@ public interface CRUDBeanLocal {
     
     List<Entity> getAll();
     
-    List<ParametersTypes> getParametrsTypes();
+    List<ParametersType> getParametrsTypes();
     
     List<EntityType> getEntityTypes();
     
     void addEntity(Entity entity);
     
-    void addEntity(String _entityType, String entityName, List<Parameters> parametrs);
+    void addEntity(String _entityType, String entityName, List<Parameter> parametrs);
     
     void updateEntity(Entity editedEntity);
     void deleteEntity(Entity entity);

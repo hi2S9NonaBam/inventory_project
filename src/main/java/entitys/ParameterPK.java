@@ -8,22 +8,22 @@ import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 @Embeddable
-public class ParametersPK implements Serializable {
+public class ParameterPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "ENTITY_ID")
-    private long entityId;
+    private Long entityId;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "PARAMETERSTYPES_ID")
     private long parameterstypesId;
 
-    public ParametersPK() {
+    public ParameterPK() {
     }
 
-    public ParametersPK(long entityId, long parameterstypesId) {
+    public ParameterPK(long entityId, long parameterstypesId) {
         this.entityId = entityId;
         this.parameterstypesId = parameterstypesId;
     }

@@ -1,6 +1,7 @@
 package entitys;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -34,7 +35,7 @@ public class Entity implements Serializable {
     @Column(name = "ENTITY_ID")
     @GeneratedValue(generator = "entitySeq")
     @SequenceGenerator(name="entitySeq",sequenceName="ENTITY_SEQ", allocationSize=1)
-    private long entityId;
+    private Long entityId;
     
     @Size(max = 20)
     @Column(name = "NAME")
@@ -52,16 +53,38 @@ public class Entity implements Serializable {
     private EntityType entityType;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entity")
-    private List<Parameters> parametersList;
-
-    public Entity() {
+    private List<Parameter> parametersList;
+    
+    public Entity()
+    {
     }
 
-    public Entity(String entityName, Entity parent, EntityType entityType, List<Parameters> parameters) {
+    public Entity(String entityName, Entity parent, EntityType entityType, List<Parameter> parameters) {
         this.entityType = entityType;
         this.name = entityName;
         this.parentEntity = parent;
-        this.parametersList = parameters;
+        if(parameters != null)
+            parameters.forEach(Entity::addParametr);
+    }
+    
+    public void addChild(Entity child)
+    {
+        if(childEntitysList == null)
+            childEntitysList = new ArrayList<>();
+        
+        child.setParentEntity(this);
+        childEntitysList.add(child);
+    }
+    
+    public void addParametr(Parameter parameter)
+    {
+        if(parametersList == null)
+            parametersList = new ArrayList<>();
+        
+        parameter.parametersPK.setEntityId(this.entityId);
+        parameter.setEntity(this);
+        
+        parametersList.add(parameter);
     }
 
     public long getEntityId() 
@@ -90,19 +113,14 @@ public class Entity implements Serializable {
         return childEntitysList;
     }
 
-    public void setEntityList(List<Entity> entityList) 
-    {
-        this.childEntitysList = entityList;
-    }
-
-    public Entity getParentId() 
+    public Entity getParentEntity() 
     {
         return parentEntity;
     }
 
-    public void setParentId(Entity parentId) 
+    public void setParentEntity(Entity parent) 
     {
-        this.parentEntity = parentId;
+        this.parentEntity = parent;
     }
 
     public EntityType getEntitytypeId() 
@@ -110,18 +128,18 @@ public class Entity implements Serializable {
         return entityType;
     }
 
-    public void setEntitytypeId(EntityType entitytypeId) 
+    public void setEntityType(EntityType entityType) 
     {
-        this.entityType = entitytypeId;
+        this.entityType = entityType;
     }
 
     @XmlTransient
-    public List<Parameters> getParametersList() 
+    public List<Parameter> getParametersList() 
     {
         return parametersList;
     }
 
-    public void setParametersList(List<Parameters> parametersList) 
+    public void setParametersList(List<Parameter> parametersList) 
     {
         this.parametersList = parametersList;
     }

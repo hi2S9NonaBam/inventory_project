@@ -37,11 +37,11 @@ public class List implements Serializable {
     private String value;
     
     @OneToMany(mappedBy = "listId")
-    private java.util.List<Parameters> parametersList;
+    private java.util.List<Parameter> parametersList;
     
     @JoinColumn(name = "PARAMETERSTYPES_ID", referencedColumnName = "PARAMETERSTYPES_ID")
     @ManyToOne(optional = false)
-    private ParametersTypes parameterstypesId;
+    private ParametersType parameterstypesId;
 
     public List() {
     }
@@ -67,19 +67,19 @@ public class List implements Serializable {
     }
 
     @XmlTransient
-    public java.util.List<Parameters> getParametersList() {
+    public java.util.List<Parameter> getParametersList() {
         return parametersList;
     }
 
-    public void setParametersList(java.util.List<Parameters> parametersList) {
+    public void setParametersList(java.util.List<Parameter> parametersList) {
         this.parametersList = parametersList;
     }
 
-    public ParametersTypes getParameterstypesId() {
+    public ParametersType getParameterstypesId() {
         return parameterstypesId;
     }
 
-    public void setParameterstypesId(ParametersTypes parameterstypesId) {
+    public void setParameterstypesId(ParametersType parameterstypesId) {
         this.parameterstypesId = parameterstypesId;
     }
 
