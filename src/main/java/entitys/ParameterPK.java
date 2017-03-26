@@ -23,8 +23,7 @@ public class ParameterPK implements Serializable {
     public ParameterPK() {
     }
 
-    public ParameterPK(long entityId, long parameterstypesId) {
-        this.entityId = entityId;
+    public ParameterPK(long parameterstypesId) {
         this.parameterstypesId = parameterstypesId;
     }
 

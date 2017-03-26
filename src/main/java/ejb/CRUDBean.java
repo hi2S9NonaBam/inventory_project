@@ -32,7 +32,7 @@ public class CRUDBean implements CRUDBeanLocal {
 
     @Override
     public List<ParametersType> getParametrsTypes() {
-        return entityManager.createQuery("SELECT p FROM ParametersTypes p").getResultList();
+        return (List<ParametersType>)entityManager.createQuery("SELECT p FROM ParametersType p").getResultList();
     }
 
     @Override
@@ -41,32 +41,10 @@ public class CRUDBean implements CRUDBeanLocal {
     }
     
     @Override
-    public void addEntity(Entity entity)
+    public void saveEntity(Entity entity, List<Parameter> parameters)
     {
         entityManager.persist(entity);
-    }
-
-    @Override
-    public void addEntity(String _entityType, String entityName, List<Parameter> parametrs) {
-        if(entityName == null || _entityType == null)
-            return;
-        //EntityType в сервлете (заменить)
-        EntityType entityType = (EntityType)entityManager.createQuery("SELECT x FROM EntityType x WHERE x.name = '" + _entityType + "'").getSingleResult();
-        
-        Entity entity = new Entity(entityName, null, entityType, null);
-        entityManager.persist(entity);
-        entityManager.flush();
-        //System.err.println("EntityId = " + entity.getEntityId());
-        /*
-        *   Что-бы заперсистить параметры, сущность должна получить ключ.
-        *   Может есть способ лучше?
-        */
-        for(Parameter tmp : parametrs)
-        {
-            tmp.getParametersPK().setEntityId(entity.getEntityId()+1);
-        }
-        entity.setParametersList(parametrs);
-        
+        parameters.forEach(entity::addParametr);
         entityManager.merge(entity);
     }
 

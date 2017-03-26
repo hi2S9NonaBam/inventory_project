@@ -40,7 +40,7 @@ public class ParametersType implements Serializable {
     @Column(name = "TYPE")
     private String type;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameterstypes")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameterstype")
     private List<Parameter> parametersList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parameterstypesId")

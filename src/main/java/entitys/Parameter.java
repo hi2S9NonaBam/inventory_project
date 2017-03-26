@@ -21,7 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "PARAMETERS")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Parameters.findAll", query = "SELECT p FROM Parameters p")})
+    @NamedQuery(name = "Parameter.findAll", query = "SELECT p FROM Parameter p")})
 public class Parameter implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,73 +50,92 @@ public class Parameter implements Serializable {
     
     @JoinColumn(name = "PARAMETERSTYPES_ID", referencedColumnName = "PARAMETERSTYPES_ID", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private ParametersType parameterstypes;
+    private ParametersType parameterstype;
 
-    public Parameter() {
+    public Parameter() 
+    {
     }
 
-    public Parameter(ParameterPK parametersPK) {
-        this.parametersPK = parametersPK;
+    /**
+     * Создает параметр.
+     * (Не персистить отдельно от сущности! Используется составной ключ, 
+     * который становится полным только при добавлении параметра в сущность)
+     * @param parametersType тип параметра
+     */
+    public Parameter(ParametersType parametersType) 
+    {
+        this.parameterstype = parametersType;
+        parametersPK = new ParameterPK(parametersType.getParameterstypesId());
     }
 
-    public Parameter(long entityId, long parameterstypesId) {
-        this.parametersPK = new ParameterPK(entityId, parameterstypesId);
-    }
-
-    public ParameterPK getParametersPK() {
+    public ParameterPK getParametersPK() 
+    {
         return parametersPK;
     }
 
-    public void setParametersPK(ParameterPK parametersPK) {
+    public void setParametersPK(ParameterPK parametersPK) 
+    {
         this.parametersPK = parametersPK;
     }
 
-    public Date getValueDate() {
+    public Date getValueDate() 
+    {
         return valueDate;
     }
 
-    public void setValueDate(Date valueDate) {
+    public void setValueDate(Date valueDate) 
+    {
         this.valueDate = valueDate;
     }
 
-    public String getValueChar() {
+    public String getValueChar() 
+    {
         return valueChar;
     }
 
-    public void setValueChar(String valueChar) {
+    public void setValueChar(String valueChar) 
+    {
         this.valueChar = valueChar;
     }
 
-    public String getValueClob() {
+    public String getValueClob() 
+    {
         return valueClob;
     }
 
-    public void setValueClob(String valueClob) {
+    public void setValueClob(String valueClob) 
+    {
         this.valueClob = valueClob;
     }
 
-    public entitys.Entity getEntity() {
+    public entitys.Entity getEntity() 
+    {
         return entity;
     }
 
-    public void setEntity(entitys.Entity entity) {
+    public void setEntity(entitys.Entity entity) 
+    {
         this.entity = entity;
     }
 
-    public List getListId() {
+    public List getListId() 
+    {
         return listId;
     }
 
-    public void setListId(List listId) {
+    public void setListId(List listId) 
+    {
         this.listId = listId;
     }
 
-    public ParametersType getParameterstypes() {
-        return parameterstypes;
+    public ParametersType getParameterstypes() 
+    {
+        return parameterstype;
     }
 
-    public void setParameterstypes(ParametersType parameterstypes) {
-        this.parameterstypes = parameterstypes;
+    public void setParameterstypes(ParametersType parameterstypes) 
+    {
+        this.parameterstype = parameterstypes;
     }
 
     @Override

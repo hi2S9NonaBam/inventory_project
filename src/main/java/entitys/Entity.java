@@ -55,18 +55,31 @@ public class Entity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "entity")
     private List<Parameter> parametersList;
     
+    /**
+     * Этот кнструктор нужен entity manager.
+     * Не надо его использовать
+     */
     public Entity()
     {
     }
 
-    public Entity(String entityName, Entity parent, EntityType entityType, List<Parameter> parameters) {
+    /**
+     * Конструтор для использования в контроллере
+     * (Необходимо заперсистить сущность в базу перед добавлением параметров)
+     * @param entityName название сущности
+     * @param parent сущность родитель (может быть null)
+     * @param entityType объект типа сущности (надо тянуть из базы отдельно)
+     */
+    public Entity(String entityName, Entity parent, EntityType entityType) {
         this.entityType = entityType;
         this.name = entityName;
         this.parentEntity = parent;
-        if(parameters != null)
-            parameters.forEach(Entity::addParametr);
     }
     
+    /**
+     * Добавить дочернюю сущность.
+     * @param child дочерняя сущность
+     */
     public void addChild(Entity child)
     {
         if(childEntitysList == null)
@@ -76,12 +89,17 @@ public class Entity implements Serializable {
         childEntitysList.add(child);
     }
     
+    /**
+     * Добавить параметр.
+     * (Необходимо заперсистить сущность в базу перед добавлением)
+     * @param parameter 
+     */
     public void addParametr(Parameter parameter)
     {
         if(parametersList == null)
             parametersList = new ArrayList<>();
         
-        parameter.parametersPK.setEntityId(this.entityId);
+        parameter.parametersPK.setEntityId(this.entityId + 1);
         parameter.setEntity(this);
         
         parametersList.add(parameter);
