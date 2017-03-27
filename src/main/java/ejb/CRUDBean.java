@@ -53,6 +53,6 @@ public class CRUDBean implements CRUDBeanLocal {
         if(editedEntity == null) 
             return; //Throw exception (потом =))
         
-            entityManager.merge(editedEntity);            
+            entityManager.merge(editedEntity);    
     }
 }

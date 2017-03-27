@@ -9,79 +9,54 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <f:view>
+    
    <h:head>
-
+        
    </h:head>
    <h:body>
-       <h:button value="New JSF" ></h:button>
-      <h:form id="form">
-            <p:dataTable id="parameters" var="entity" value="#{entityViewController.entitys}" editable="true"
-                      style="margin-bottom:20px; width:50%; margin-left: auto; margin-right: auto" >
-                <p:column headerText="Name" width="20%">
-                    <h:outputText value="#{entity.name}"/>
-                </p:column>
-
-                <p:column headerText="ID" width="20%">
-                    <h:outputText value="#{entity.entityId}"/>
-                </p:column>
-            
-            </p:dataTable>
-<!--         <p:dataTable id="parameters" var="entity" value="#{dtParameterView.entitys}" editable="true"
-                      style="margin-bottom:20px; width:50%; margin-left: auto; margin-right: auto" >
-            <f:facet name="header">
-               Parameters
+       <p:menubar >
+            <f:facet name="options">
+                <p:inputText style="margin-right:10px" placeholder="Search"/>
+                       <p:commandButton id="addEntityBtn"
+                        value="Добавить сущность"
+                        action="#{entityViewController.showErrorMessage()}"
+                        update="growlMessageId"/>
+                       <p:growl id="growlMessageId" showDetail="true"/>
             </f:facet>
-              
-            <p:ajax event="rowEdit" listener="#{dtParameterView.onRowEdit}"/>
-            <p:ajax event="rowEditCancel" listener="#{dtParameterView.onRowCancel}"/>
-            
-            <p:column headerText="Name" width="20%">
-                <h:outputText value="#{entity.name}"/>
-            </p:column>
+        </p:menubar>
+        <p:tabView>
+            <p:tab title="View all">
+                <h:form id="form">
+                 <p:dataTable id="entitys" var="entity" value="#{entityViewController.entitys}" editable="true"
+                             style="margin-bottom:20px; width:auto; margin-left: auto; margin-right: auto" >
+                     <p:column headerText="Name" width="20%">
+                         <h:outputText value="#{entity.name}"/>
+                     </p:column>
 
-            <p:column headerText="Value" >
+                     <p:column headerText="ID" width="20%">
+                         <h:outputText value="#{entity.entityId}"/>
+                     </p:column>
+                     <p:column>
+                         <p:dataTable id="parameters" var="parameter" value="#{entity.parametersList}" editable="true"
+                                 style="margin-bottom:10px; width:100%; margin-left: auto; margin-right: auto" >
+                             <p:column headerText="Parameter type" style="width: auto">
+                                 <h:outputText value="#{parameter.parameterstypes.name}"/>
+                             </p:column>
 
-                <p:cellEditor rendered="#{entity.parametersList == 'CLOB'}">
-                  <f:facet name="output"><h:outputText value="#{parameter.value}"/></f:facet>
-                  <f:facet name="input"><p:inputTextarea rows="10" id="clobInput" value="#{parameter.value}"
-                                                         style="width:100%"/></f:facet>
-               </p:cellEditor>
+                             <p:column headerText="Value">
 
-               <p:cellEditor rendered="#{parameter.type == 'CHAR'}">
-                  <f:facet name="output"><h:outputText value="#{parameter.value}"/></f:facet>
-                  <f:facet name="input"><p:inputText id="charInput" value="#{parameter.value}"
-                                                     style="width:100%"/></f:facet>
-               </p:cellEditor>
+                                 <h:outputText value="#{parameter.valueChar}" rendered="#{parameter.valueChar != null}"/>
+                                 <h:outputText value="#{parameter.valueDate}" rendered="#{parameter.valueDate != null}"/>
+                                 <h:outputText value="#{parameter.valueClob}" rendered="#{parameter.valueClob != null}"/>
+                                 <h:outputText value="#{parameter.listId.value}" rendered="#{parameter.listId != null}"/>
+                             </p:column>
 
-               <p:cellEditor rendered="#{parameter.type == 'DATE'}">
-                  <f:facet name="output"><h:outputText value="#{parameter.value}">
-                     <f:convertDateTime pattern="dd.MM.yy"/>
-                  </h:outputText>
-                  </f:facet>
-                  <f:facet name="input"><p:inputMask id="dataInput" value="#{parameter.value}" mask="99.99.99"
-                                                     style="width:100%">
-                     <f:convertDateTime pattern="dd.MM.yy"/>
-                  </p:inputMask>
-                  </f:facet>
-               </p:cellEditor>
-
-               <p:cellEditor rendered="#{parameter.type == 'LIST'}">
-                   <f:facet name="output"><h:outputText value="#{parameter.value}" /></f:facet>
-                   <f:facet name="input">
-                       <h:selectOneMenu value="#{parameter.value}" style="width:100%">
-                           <f:selectItems value="#{dtParameterView.getListValues(parameter)}" var="listValue" itemLabel="#{listValue}" itemValue="#{listValue}" />
-                       </h:selectOneMenu>
-                   </f:facet>
-               </p:cellEditor>
-
-            </p:column>
-            <p:column style="width:32px">
-               <p:rowEditor/>
-            </p:column>
-         </p:dataTable>-->
-          
-
-      </h:form>
+                         </p:dataTable>
+                     </p:column>
+                 </p:dataTable>
+                </h:form>
+            </p:tab>
+        </p:tabView>
    </h:body>
 </f:view>
 </html>
