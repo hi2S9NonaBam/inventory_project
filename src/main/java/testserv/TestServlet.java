@@ -3,6 +3,7 @@ package testserv;
 import ejb.CRUDBeanLocal;
 import entitys.Entity;
 import entitys.EntityType;
+import entitys.Entity_;
 import entitys.Parameter;
 import entitys.ParameterPK;
 import entitys.ParametersType;
@@ -40,26 +41,51 @@ public class TestServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        /*List<Pair<String, String>> parametrsList = new ArrayList<>();
-        parametrsList.add(new Pair<String, String>(
-                request.getParameter("parametrType"),
-                request.getParameter("parametr")));*/
+        List<ParametersType> parametersTypes = crud.getParametrsTypes();
+        List<EntityType> entityTypes = crud.getEntityTypes();
+        
+        System.err.println(request.getParameter("parametrType"));
+        System.err.println(request.getParameter("entityName"));
+        
+        if((request.getParameter("parametrType") != null) && (request.getParameter("entityName") != null))
+        {
+            
+
+            List<Parameter> parametrsList = new ArrayList<>();
+
+
+
+            parametersTypes.forEach((type) -> 
+                    {
+                        if(type.getName().compareTo(request.getParameter("parametrType")) == 0)
+                        {
+                            Parameter tmp = new Parameter(type);
+                            tmp.setValueChar(request.getParameter("parametr"));
+                            parametrsList.add(tmp);
+                            
+                            return;
+                        }
+                    });
+
+            entitys.Entity entity = new Entity(request.getParameter("entityName"), null, entityTypes.get(0));
+            crud.saveEntity(entity, parametrsList);
+        }
         
         //System.out.println(request.getParameter("entityName"));
         
-//        List<Parameters> parameters = new ArrayList<>();
+//        List<Parameter> parameters = new ArrayList<>();
 //        
 //        for(int i = 0; i<1; i++)
 //        {
-//            Parameters tmp = new Parameters();
-//            tmp.setParametersPK(new ParametersPK(0, 6));
+//            Parameter tmp = new Parameter();
+//            //tmp.setParametersPK(new ParameterPK(0, 6));
 //            tmp.setValueChar(request.getParameter("parametr"));
 //            parameters.add(tmp);
 //        }
-//        
-//        crud.addEntity(request.getParameter("entityType"), request.getParameter("entityName"), parameters);
-//        
-//        
+        
+        //crud.addEntity(request.getParameter("entityType"), request.getParameter("entityName"), parameters);
+        
+        
         
         try (PrintWriter out = response.getWriter()) {
             List<Entity> entitys= crud.getAll();
@@ -75,13 +101,13 @@ public class TestServlet extends HttpServlet {
                         + "<h1>Добавить сущность</h1><br>"
                         + "<label>Сущность  </label>"
                         + "<select name=\"entityType\">");
-            for(EntityType tmp : crud.getEntityTypes())
+            for(EntityType tmp : entityTypes)
                 out.println("<option>"+ tmp.getName() +"</option>\n");
             out.println("</select><input type=\"text\" name=\"entityName\" value=\"\" />");
             
             out.println("<br><label>Параметр  </label>"
                         + "<select name=\"parametrType\">");
-            for(ParametersType tmp : crud.getParametrsTypes())
+            for(ParametersType tmp : parametersTypes)
                 out.println("<option>"+ tmp.getName() +"</option>\n");
             out.println("</select><input type=\"text\" name=\"parametr\" value=\"\" />");
             
